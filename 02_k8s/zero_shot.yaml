@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: zero-shot-classifier
-        image: 635605213996.dkr.ecr.us-east-2.amazonaws.com/declarative-mlops-falcon:8c23375
+        image: gcr.io/argo-demo-401813/zero_shot_text_classification:1.0.0
         command: ["serve"]
         ports:
         - containerPort: 8080
