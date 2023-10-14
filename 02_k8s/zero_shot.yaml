@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zero-shot-classifier
+spec:
+  selector:
+    matchLabels:
+      run: zero-shot-classifier
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: zero-shot-classifier
+    spec:
+      containers:
+      - name: zero-shot-classifier
+        image: 635605213996.dkr.ecr.us-east-2.amazonaws.com/declarative-mlops-falcon:8c23375
+        command: ["serve"]
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          httpGet:
+            path: /
+            port: 8080
+---        
+apiVersion: v1
+kind: Service
+metadata:
+  name: zero-shot-classifier
+  labels:
+    run: zero-shot-classifier
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    run: zero-shot-classifier
